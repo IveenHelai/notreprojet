@@ -24,9 +24,9 @@ Rest.post(
 
 Rest.put(
 {
-    
+
     table:"products",
-    id:2,
+    rowid:2,
     fields:
     {
         title:"titre produit",
@@ -44,7 +44,7 @@ Rest.put(
 Rest.delete(
     {
         table:"products",
-        id:2 
+        rowid:2 
         
     }).done( (resp) => 
     {
