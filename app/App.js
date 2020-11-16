@@ -21,6 +21,7 @@ class App
 
     static browse()
     {
+        
         console.clear();
         let hash = (window.location.hash || "#accueil").substring(1);
         $('main').hide().html(hash).fadeIn();
