@@ -26,7 +26,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $fields = isset($_post['fields']) ? $_post['fields'] : NULL;
         if($table == NULL)
         {
-            echo json_ecnode(false);
+            echo json_encode(false);
             break;
         }
 
@@ -88,6 +88,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
         # code...
         break;
 }
+
+
 
 function validate_request($request)
 {
