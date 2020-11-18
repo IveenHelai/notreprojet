@@ -42,9 +42,10 @@ class Db
         return $stmt;
     }
 
-    public static function select($table, $id = null, $where = null, $orderby = " id ASC ")
+    public static function select($table, $id = null, $where = null, $order, $active = true)
     {
-        $orderby = " ORDER BY ".$orderby;
+        
+        
         $params=[];
         $sql = " SELECT * FROM $table WHERE id";
         
@@ -53,33 +54,110 @@ class Db
             $sql .= " = ?";
             $params[] = $id;
         }
-        if($where == null)
+
+        if($active === true)
         {
             $sql.= " AND active = ? ";
             $params[] = true;
         }
+
+        if($where != NULL && is_array($where)) 
+        {
+            foreach ($where as $key => $value) 
+            {
+                $sql.= " AND $key $value ";
+            }
+        }
+
+        if($order === NULL)
+        {
+            $orderby = " ORDER BY id ASC";
+        }
+        else
+        {
+            $orderby = " ORDER BY ".$order;
+        }
+
         $sql.= $orderby;
 
         $res = Db::query($sql, $params);
 
-        return $res;
+        return $res->fetchAll(5);
+
     }
     
-    public static function insert()
+    public static function insert($table, $fields = NULL)
     {
         
+        $sql = "INSERT INTO $table";
+        if(!is_array($fields))
+        {
+            $sql.= "(id) VALUES(NULL);";
+            self::query($sql);
+            return self::$db->lastInsertId();
+        }
+        elseif(is_array($fields))
+        {
+            $fields_part = "(";
+            $values_part="(";
+            $params=[];
+            foreach ($fields as $key => $value) 
+            {
+            
+                $fields_part.= "$key ,";
+                $values_part.= "? ,";
+                $params[] = $value;
+
+            }
+            $fields_part = trim($fields_part,',');
+            $values_part = trim($values_part, ',');
+            $fields_part .= ")";
+            $values_part .= ");";
+            $sql.= $fields_part. " VALUES ".$values_part;
+        }
+
+        self::query($sql,$params);
+        return self::$db->lastInsertId();
     }
     
-    public static function update()
+    public static function update($table, $fields, $rowid)
     {
+        $sql = " UPDATE $table SET ";
+        $params= [];
         
+        foreach ($fields as $key => $value) 
+        {
+            $sql.= " $key = ? ,";
+            $params[] = $value;
+        }
+        $sql = trim($sql, ',');
+        $sql.= " WHERE id = ?";
+        $params[] = $rowid;
+        $res = self::query($sql, $params);
+        return $res->rowCount();
+
     }
     
-    public static function delete()
+    public static function delete($table, $rowid, $soft_delete = true)
     {
+        if($soft_delete === true)
+        {
+            $sql="UPDATE $table SET active = false WHERE id = ?";
+            $params = [$rowid];
+            $res = self::query($sql,$params)->rowCount();
+            return $res;
+        }
+        elseif($soft_delete === false)
+        {
+            $sql = "DELETE FROM $table WHERE id = ?";
+            $params = [$rowid];
+            $res = self::query($sql, $params)->rowCount();
+            return $res;
+        }
         
+
     }
      
 }
-$res =  Db::select("product");
-var_dump($res->fetchAll(5));
+// $res =  Db::select("product",3);
+// var_dump($res->fetchAll(5));

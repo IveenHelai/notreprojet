@@ -1,23 +1,41 @@
 <?php 
 
+include_once("Db.php");
+
 switch ($_SERVER['REQUEST_METHOD']) {
 
     case 'GET':
 
         $_get = validate_request($_GET);
-
         $table = isset($_get['table']) ? $_get['table'] : NULL;
         if ($table == NULL) 
         {
             echo json_encode(false);
             break;
         }
+
         $rowid = isset($_get['rowid']) ? $_get['rowid'] : NULL;
         $where = isset($_get['where']) ? $_get['where'] : NULL;
         $order = isset($_get['orderby']) ? $_get['orderby'] : NULL;
 
-        echo json_encode($_get);
-    break;
+
+        if($_GET['active'] === 'false')
+        {
+
+            $res = Db::select($table, $rowid, $where ,$order, false);
+            echo json_encode($res);
+            break;
+        }
+        else
+        {
+            $res = Db::select($table, $rowid, $where ,$order); 
+            echo json_encode($res);
+            break;
+        }
+        
+        
+
+        break;
     
     case 'POST':
 
@@ -30,8 +48,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
             echo json_encode(false);
             break;
         }
-
-        echo json_encode($_post);
+        $res = Db::insert($table, $fields);
+        echo json_encode($res);
+        
     break;
     
     case 'PUT' :
@@ -60,29 +79,43 @@ switch ($_SERVER['REQUEST_METHOD']) {
             break;
 
         }
-        echo json_encode($_put);
+        $res = Db::update($table,$fields,$rowid);
+        echo json_encode($res);
         break;
         
     case 'DELETE' : 
+
         $_del = array(); //tableau qui va contenir les données reçues
         parse_str(file_get_contents('php://input'), $_del);
         $_del = validate_request($_del);
-
         $table = isset($_del['table']) ? $_del['table'] : NULL;
         if($table == NULL)
         {
             echo json_encode(false);
             break;
         }
-
-        
         $rowid = isset($_del['rowid']) ? $_del['rowid'] : NULL;
         if($rowid == NULL)
         {
             echo json_encode(false);
             break;
         }
-        echo json_encode($_del);
+
+        if($_del['soft'] === "false")
+        {
+            $res = Db::delete($table,$rowid,false);
+            echo json_encode($res);
+            break;
+        }
+        else
+        {
+            $res = Db::delete($table,$rowid);
+            echo json_encode($res);
+            break;
+        }
+
+
+        echo json_encode(false);
          break;
 
     default:
