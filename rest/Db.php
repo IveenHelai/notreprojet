@@ -144,15 +144,13 @@ class Db
         {
             $sql="UPDATE $table SET active = false WHERE id = ?";
             $params = [$rowid];
-            $res = self::query($sql,$params)->rowCount();
-            return $res;
+            return self::query($sql,$params)->rowCount();
         }
         elseif($soft_delete === false)
         {
             $sql = "DELETE FROM $table WHERE id = ?";
             $params = [$rowid];
-            $res = self::query($sql, $params)->rowCount();
-            return $res;
+            return self::query($sql, $params)->rowCount();
         }
         
 
