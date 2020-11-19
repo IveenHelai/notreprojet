@@ -2,7 +2,6 @@ App.start();
 Utils.init();
 
 
-
 // TRY LECTURE
 
 Rest.get(
@@ -24,9 +23,11 @@ Rest.get(
     $('main').append("<br>Test GET : <br>")
     resp.forEach(element => 
     {
+        $('main').append(JSON.stringify(element)+"<br>").fadeIn();
         let tmp = new Product(element);
         console.log(tmp);
     });
+    
 
 });
 
