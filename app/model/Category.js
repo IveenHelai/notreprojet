@@ -5,7 +5,7 @@ class Category extends CommonObject
     {
         super()
         this.assign(obj)
-        loadRels(rels);
+        this.loadRels(this.rels);
         console.log(this);
     }
 
