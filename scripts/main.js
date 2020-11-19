@@ -1,4 +1,6 @@
 App.start();
+Utils.init();
+
 
 
 // TRY LECTURE
@@ -13,16 +15,17 @@ Rest.get(
         
         title: " LIKE 'm%' ",
         price: " > 20.00 "
-        
+
     }
 
 }).done( (resp) => 
 {
-    resp = JSON.parse(resp);
+    resp = resp.tryJsonParse();
     $('main').append("<br>Test GET : <br>")
     resp.forEach(element => 
     {
-        $('main').append(JSON.stringify(element)+"<br>").fadeIn();
+        let tmp = new Product(element);
+        console.log(tmp);
     });
 
 });
@@ -59,7 +62,7 @@ Rest.put(
     {
         title:"titre produit",
         description: "description produit",
-        price: 55.25
+        price: 55.18
     }
 
 }).done( (resp) => 
@@ -72,13 +75,13 @@ Rest.put(
 
 //TRY DELETE
 Rest.delete(
-    {
-        table:"product",
-        rowid:5, 
-        soft:false
-    }).done( (resp) => 
-    {
-    
-        $('main').append("<br>TEST DELETE : <br>Nombre de ligne affectées par la suppression : " + resp + "<br>").fadeIn();
-    
-    });
+{
+    table:"product",
+    rowid:6, 
+    soft:true
+}).done( (resp) => 
+{
+
+    $('main').append("<br>TEST DELETE : <br>Nombre de ligne affectées par la suppression : " + resp + "<br>").fadeIn();
+
+});
