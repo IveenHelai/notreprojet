@@ -1,5 +1,6 @@
 class CommonObject
 {
+
     assign(obj)
     {
         Object.keys(obj).forEach( (key)=>
@@ -21,6 +22,7 @@ class CommonObject
 
     loadRels(rels)
     {
+        
         for (let i = 0; i < rels.length; i++) 
         {
 
@@ -74,6 +76,7 @@ class CommonObject
             }
 
         }
+        
     }
 
 

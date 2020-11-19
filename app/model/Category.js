@@ -4,9 +4,7 @@ class Category extends CommonObject
     constructor(obj)
     {
         super()
-        this.assign(obj)
-        this.loadRels(this.rels);
-        console.log(this);
+        this.assign(obj);
     }
 
     id = 0;

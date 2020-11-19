@@ -5,8 +5,6 @@ class Product extends CommonObject
     {
         super();
         this.assign(obj);
-        this.loadRels(this.rels);
-        console.log(this);
     }
 
     id = 0;

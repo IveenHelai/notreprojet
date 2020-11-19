@@ -22,8 +22,9 @@ Rest.get(
     $('main').append("<br>Test GET : <br>")
     resp.forEach(element => 
     {
-
-        console.log(new Product(element));
+        let tmp = new Product(element);
+        tmp.loadRels(tmp.rels);
+        console.log(tmp);
         $('main').append(JSON.stringify(element)+"<br>").fadeIn();
 
     });
@@ -31,22 +32,25 @@ Rest.get(
 });
 
 
-// Rest.get(
-// {
+Rest.get(
+{
 
-//     table:"category",
-//     active:true
+    table:"category",
+    rowid:2,
+    active:true
 
-// }).done( (resp) => 
-// {
-//     resp = resp.tryJsonParse();
-//     $('main').append("<br>Test GET : <br>")
-//     resp.forEach(element => 
-//     {
-//         $('main').append(JSON.stringify(element)+"<br>").fadeIn();
-//         let tmp = new Category(element);
-//     });
-// });
+}).done( (resp) => 
+{
+    resp = resp.tryJsonParse();
+    $('main').append("<br>Test GET : <br>")
+    resp.forEach(element => 
+    {
+        $('main').append(JSON.stringify(element)+"<br>").fadeIn();
+        let tmp = new Category(element);
+        tmp.loadRels(tmp.rels);
+        console.log(tmp);
+    });
+});
 
 
 
