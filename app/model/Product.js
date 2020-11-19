@@ -1,23 +1,12 @@
-class Product 
+class Product extends CommonObject
 {
 
     constructor(obj) 
     {
-        Object.keys(obj).forEach( (key)=>
-        {
-            if(this[key] !== undefined && typeof this[key] === "number")
-            {
-                this[key] = Number(obj[key]);
-            }
-            else if(this[key] !== undefined && typeof this[key] === "boolean")
-            {
-                this[key] = Boolean(obj[key]);
-            }
-            else
-            {
-                this[key] = obj[key];
-            }
-        });
+        super();
+        this.assign(obj);
+        this.loadRels(this.rels);
+        console.log(this);
     }
 
     id = 0;
@@ -28,6 +17,16 @@ class Product
     price = 0;
     onsale = false;
     ord = 0;
+    category = "";
 
-
+    rels=
+    [
+        {
+            table: "category",
+            container: "category",
+            class: "Category",
+            filter: "category_id",
+            field: "id"
+        }
+    ];
 }

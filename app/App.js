@@ -22,7 +22,7 @@ class App
     static browse()
     {
         
-        console.clear();
+        //console.clear();
         let hash = (window.location.hash || "#accueil").substring(1);
 
     }

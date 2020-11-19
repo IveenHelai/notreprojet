@@ -1,14 +1,13 @@
 App.start();
 Utils.init();
 
-
 // TRY LECTURE
 
 Rest.get(
 {
 
     table:"product",
-    active:false,
+    active:true,
     where:
     {
         
@@ -19,17 +18,36 @@ Rest.get(
 
 }).done( (resp) => 
 {
-    resp = resp.tryJsonParse();
+    resp = JSON.parse(resp);
     $('main').append("<br>Test GET : <br>")
     resp.forEach(element => 
     {
+
+        console.log(new Product(element));
         $('main').append(JSON.stringify(element)+"<br>").fadeIn();
-        let tmp = new Product(element);
-        console.log(tmp);
+
     });
-    
 
 });
+
+
+// Rest.get(
+// {
+
+//     table:"category",
+//     active:true
+
+// }).done( (resp) => 
+// {
+//     resp = resp.tryJsonParse();
+//     $('main').append("<br>Test GET : <br>")
+//     resp.forEach(element => 
+//     {
+//         $('main').append(JSON.stringify(element)+"<br>").fadeIn();
+//         let tmp = new Category(element);
+//     });
+// });
+
 
 
 //TRY ECRITURE
