@@ -9,6 +9,7 @@ class Category extends CommonObject
 
     id = 0;
     active = true;
+    static table="category";
     title = "";
     description = "";
     onsale = false;

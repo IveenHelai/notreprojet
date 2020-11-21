@@ -26,4 +26,21 @@ class App
         let hash = (window.location.hash || "#accueil").substring(1);
 
     }
+
+    static classes = [];
+
+    static loadClasses()
+    {     
+        //TODO
+    }
+
+    static loadScript()
+    {
+        //TODO
+    }
+
+    static test()
+    {
+        //TODO
+    }
 }

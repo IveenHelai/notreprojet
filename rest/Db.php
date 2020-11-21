@@ -36,6 +36,8 @@ class Db
         try {
             $stmt = self::connect()->prepare($sql); // requête préparée
             $stmt->execute($params);
+            
+
         } catch (PDOException $e) {
             return $e;
         }

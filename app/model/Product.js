@@ -9,6 +9,7 @@ class Product extends CommonObject
 
     id = 0;
     active = true;
+    static table = "product";
     category_id = 0;
     title = "";
     description = "";

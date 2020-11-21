@@ -5,7 +5,7 @@ include_once("Db.php");
 switch ($_SERVER['REQUEST_METHOD']) {
 
     case 'GET':
-
+        
         $_get = validate_request($_GET);
         $table = isset($_get['table']) ? $_get['table'] : NULL;
         if ($table == NULL) 
