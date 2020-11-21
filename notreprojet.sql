@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 19 nov. 2020 à 15:56
+-- Généré le : sam. 21 nov. 2020 à 11:40
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -32,11 +32,11 @@ CREATE TABLE IF NOT EXISTS `category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `title` varchar(255) NOT NULL DEFAULT '',
-  `description` text NOT NULL,
-  `onsale` tinyint(1) NOT NULL DEFAULT '1',
+  `description` text,
+  `onsale` tinyint(1) NOT NULL DEFAULT '0',
   `ord` smallint(6) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `category`
@@ -62,7 +62,34 @@ INSERT INTO `category` (`id`, `active`, `title`, `description`, `onsale`, `ord`)
 (17, 1, 'pretium nisl ut volutpat sapien', 'Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.', 0, 12),
 (18, 0, 'cras non velit nec nisi', 'Proin risus.', 1, 20),
 (19, 1, 'donec ut dolor morbi', 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.', 0, 5),
-(20, 1, 'vivamus in', 'Etiam vel augue. Vestibulum rutrum rutrum neque.', 1, 2);
+(20, 1, 'vivamus in', 'Etiam vel augue. Vestibulum rutrum rutrum neque.', 1, 2),
+(21, 1, 'POO INSERT', 'POO DESCRIPTION', 0, 1),
+(22, 1, 'POO INSERT', 'POO DESCRIPTION', 0, 1),
+(23, 1, 'POO INSERT', 'POO DESCRIPTION', 0, 1),
+(24, 1, 'POO INSERT', NULL, 1, 0),
+(25, 1, 'POO INSERT', NULL, 0, 0),
+(26, 1, 'POO INSERT', NULL, 0, 0),
+(27, 1, 'POO INSERT', NULL, 0, 0),
+(28, 1, 'POO INSERT', NULL, 0, 0),
+(29, 1, 'POO INSERT', NULL, 0, 0),
+(30, 1, 'POO INSERT', NULL, 0, 0),
+(31, 1, 'POO INSERT', NULL, 0, 0),
+(32, 1, 'POO INSERT', NULL, 0, 0),
+(33, 1, 'POO INSERT', NULL, 0, 0),
+(34, 1, 'POO INSERT', NULL, 0, 0),
+(35, 1, 'POO INSERT', NULL, 0, 0),
+(36, 1, 'POO INSERT', NULL, 0, 0),
+(37, 1, 'POO INSERT', NULL, 0, 0),
+(38, 1, 'POO INSERT', NULL, 0, 0),
+(39, 1, 'POO INSERT', NULL, 0, 0),
+(40, 1, 'POO INSERT', NULL, 0, 0),
+(41, 1, 'POO INSERT', NULL, 0, 0),
+(42, 1, 'POO INSERT', NULL, 0, 0),
+(43, 1, 'POO INSERT', NULL, 0, 0),
+(44, 1, 'POO INSERT', NULL, 0, 0),
+(45, 1, 'POO INSERT', NULL, 0, 0),
+(46, 1, 'POO INSERT', NULL, 0, 0),
+(47, 1, 'POO INSERT', NULL, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -113,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `product` (
   `onsale` tinyint(1) NOT NULL DEFAULT '1',
   `ord` smallint(6) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=211 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=280 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `product`
@@ -304,7 +331,76 @@ INSERT INTO `product` (`id`, `active`, `category_id`, `title`, `description`, `p
 (207, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
 (208, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
 (209, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
-(210, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0);
+(210, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(211, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(212, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(213, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(214, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(215, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(216, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(217, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(218, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(219, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(220, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(221, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(222, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(223, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(224, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(225, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(226, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(227, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(228, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(229, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(230, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(231, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(232, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(233, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(234, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(235, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(236, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(237, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(238, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(239, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(240, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(241, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(242, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(243, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(244, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(245, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(246, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(247, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(248, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(249, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(250, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(251, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(252, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(253, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(254, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(255, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(256, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(257, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(258, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(259, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(260, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(261, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(262, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(263, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(264, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(265, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(266, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(267, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(268, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(269, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(270, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(271, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(272, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(273, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(274, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(275, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(276, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(277, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(278, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0),
+(279, 1, 0, 'testtitle', 'testdescirption', 22.35, 1, 0);
 
 -- --------------------------------------------------------
 
