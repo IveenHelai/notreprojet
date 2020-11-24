@@ -8,12 +8,12 @@ class Category extends CommonObject
     }
 
     id = 0;
-    active = true;
+    _active = true;
     static table="category";
-    title = "";
-    description = "";
-    onsale = false;
-    ord = 0;
+    _title = "";
+    _description = "";
+    _onsale = false;
+    _ord = 0;
     product_list = [];
 
 

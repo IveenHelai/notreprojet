@@ -2,6 +2,15 @@ class App
 {
     static start() 
     {
+
+        App.loadClasses().done(()=>
+        {
+            Utils.init();
+            $('document').on('ready')
+            {
+                App.browse();
+            }
+        });
         window.onpopstate = () => 
         {
             App.browse();
@@ -13,10 +22,7 @@ class App
             btn ? btn.click() : null;
         });
 
-        $('document').on('ready')
-        {
-            App.browse();
-        }
+        $
     }
 
     static browse()
@@ -27,16 +33,44 @@ class App
 
     }
 
-    static classes = [];
+    static classes = [
+        "Utils", "Rest", "model/CommonObject" 
+    ];
+    static extends = [
+        "model/Category", "model/Product"
+    ]
 
     static loadClasses()
     {     
-        //TODO
+        let def = $.Deferred();
+        let classes = $.map(App.classes, (cl)=>{
+
+            return App.loadScript("app"+cl+"js");
+
+        });
+        $.when.apply($, classes).then(()=>{
+            let extend = $.map(App.extends, (ext)=>{
+                return App.loadScript("app/"+ext+".js");
+            });
+            $.when.apply($, extend).then(()=>{
+                def.resolve();
+            });
+        });
+        return def.promise();
     }
 
-    static loadScript()
+    static loadScript(path)
     {
-        //TODO
+        let def = $.Deferred();
+        let scr = document.createElement('script');
+        scr.src = path;
+        scr.defer = true;
+        scr.onload = function () 
+        {
+            def.resolve();
+        }
+        document.body.appendChild(scr);
+        return def.promise();
     }
 
     static test()

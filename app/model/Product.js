@@ -8,14 +8,14 @@ class Product extends CommonObject
     }
 
     id = 0;
-    active = true;
+    _active = true;
     static table = "product";
-    category_id = 0;
-    title = "";
-    description = "";
-    price = 0;
-    onsale = false;
-    ord = 0;
+    _category_id = 0;
+    _title = "";
+    _description = "";
+    _price = 0;
+    _onsale = false;
+    _ord = 0;
     category = "";
 
     rels=
@@ -24,7 +24,7 @@ class Product extends CommonObject
             table: "category",
             container: "category",
             class: "Category",
-            filter: "category_id",
+            filter: "_category_id",
             field: "id"
         }
     ];

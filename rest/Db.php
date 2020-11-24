@@ -34,12 +34,13 @@ class Db
     public static function query($sql, $params = null)
     {
         try {
+             
             $stmt = self::connect()->prepare($sql); // requête préparée
             $stmt->execute($params);
             
 
         } catch (PDOException $e) {
-            return $e;
+            return [$e,$stmt->debugDumpParams()];
         }
         return $stmt;
     }
@@ -108,6 +109,10 @@ class Db
             
                 $fields_part.= "$key ,";
                 $values_part.= "? ,";
+                if(is_bool($value) === true)
+                {
+                    $value === true ? $value = 1 : $value = 0;
+                };
                 $params[] = $value;
 
             }
@@ -117,9 +122,9 @@ class Db
             $values_part .= ");";
             $sql.= $fields_part. " VALUES ".$values_part;
         }
-
-        self::query($sql,$params);
-        return self::$db->lastInsertId();
+        
+        $ret = self::query($sql,$params);
+        return (int) self::$db->lastInsertId();
     }
     
     public static function update($table, $fields, $rowid)

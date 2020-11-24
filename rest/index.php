@@ -39,10 +39,20 @@ switch ($_SERVER['REQUEST_METHOD']) {
     
     case 'POST':
 
-        $_post = validate_request($_POST);
-
+        
+        $_post= validate_request($_POST);
         $table = isset($_post['table']) ? $_post['table'] : NULL;
-        $fields = isset($_post['fields']) ? $_post['fields'] : NULL;
+        $fields = isset($_POST['fields']) ? json_decode($_POST['fields'], true) : NULL;
+        // echo var_dump($fields);
+        // =>
+        // C:\wamp64\www\notreprojet\rest\index.php:46:
+        // array (size=5)
+        // 'active' => boolean true
+        // 'title' => string 'fuckoff' (length=7)
+        // 'description' => string '' (length=0)
+        // 'onsale' => boolean false
+        // 'ord' => int 0
+
         if($table == NULL)
         {
             echo json_encode(false);

@@ -2,28 +2,74 @@ App.start();
 Utils.init();
 
 
-let tmp = Product.select(1);
-console.log(tmp);
-
-tmp = Product.select(null,false, {price: " > 75.00"});
-console.log(tmp);
-
-tmp = Category.select(10);
-console.log(tmp);
-
-tmp = Category.select();
-console.log(tmp);
-
-
-
-
 
 //TRY ECRITURE
-let item = new Category({});
+// let item = new Category({});
 
-let id = item.insert({active:1,title:"POO INSERT"}).done( (resp) =>{
-        console.log(resp);
-    });
+// let id = item.insert({active:1,title:"POO INSERT"}).done( (resp) =>{
+//         console.log(resp);
+//     });
+// let item2 = new Category({description:"test"});
+// item2.title = "test";
+// item2.insert();
+// console.log(item2);
+// let item3 = new Category();
+// console.log(item3);
+// item3._title = "fuckoff";
+// console.log(item3.prepareJsonInsert());
+// item3.insert().done(resp=>
+//     {
+
+//         console.log(item3);
+//         console.log(JSON.parse(resp));
+
+//     });
+    
+
+
+
+// let tmp = Product.select(1);
+// console.log(tmp);
+
+// let tmp = Product.select(null,false, {price: " > 75.00"}).done( data=>
+//     {
+//         data.forEach(prd => {
+//             prd.loadRels(prd.rels);
+//             console.log(prd);
+//         });
+//     })
+
+
+
+
+// tmp = Category.select().done(data=>
+//     {
+//         console.log(data);
+//         data.forEach(categ => {
+//             categ.loadRels(categ.rels);
+//             console.log(categ );
+//         });
+//     });
+
+let tmp = new Product({_active:true,_title:"XBOX 5",_price:499.99,_ord:1});
+tmp._category_id = 5;
+tmp._onsale = 0;
+tmp._description = "Une console fictive"
+
+
+tmp.insert().done(id=>
+{
+    
+    console.log(id+" product created");
+    tmp.loadRels(tmp.rels)
+    console.log(tmp);
+
+})
+
+
+
+
+
 
 
 // //TRY UPDATE 

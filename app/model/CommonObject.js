@@ -3,6 +3,8 @@ class CommonObject
 
     assign(obj)
     {
+        obj == null ? obj = {} : ""; 
+
         Object.keys(obj).forEach( (key)=>
         {
             if(this[key] !== undefined && typeof this[key] === "number")
@@ -22,7 +24,6 @@ class CommonObject
 
     loadRels(rels)
     {
-        
         
         for (let i = 0; i < rels.length; i++) 
         {
@@ -82,19 +83,21 @@ class CommonObject
 
     static select(id = null, active = true, where = null)
     {
+        let def = $.Deferred();
         let ret = [];
         let classname = eval(this.prototype.constructor.name);
         let table = classname.table;
         let rowid = id === null ? null : id;
         if (rowid !== null && rowid > 0) 
         {
+            
             Rest.get(
                 {
                     table: table,
-                    active:false,
-                    rowid: rowid
-                        
-                    // where:where
+                    active:active,
+                    rowid: rowid,  
+                    where:where
+
                 }).done( (resp)=>
                 {
                     resp = resp.tryJsonParse();
@@ -102,9 +105,9 @@ class CommonObject
                     {
                         
                         ret.push(new classname(obj));
-        
+                        
                     });
-                    
+                    def.resolve(ret);
                 });
         } 
         else 
@@ -119,22 +122,55 @@ class CommonObject
                 }).done( (resp)=>
                 {
                     resp = resp.tryJsonParse();
+                    
                     resp.forEach(obj=>
                     {
-                        
+                        let tmp = obj.id;
+                        obj = classname.prepareJsonSelect(obj);
+                        obj['id'] = tmp;
                         ret.push(new classname(obj));
-        
                     });
-                    
+                    def.resolve(ret);
                 });
         }
+        return def.promise();
+    }
+
+    static prepareJsonSelect(json)
+    {
+        let ret = {};
+        Object.keys(json).forEach(key=>
+            {
+                if(key !== "id")
+                {
+                    ret['_'+key] = json[key];
+                }
+                
+            });
+        return ret;
+    }
+
+    prepareJsonInsert()
+    {
+        let ret = {};
+        Object.keys(this).forEach(key=>
+            {
+                if(key.substring(0,1) == "_")
+                {
+                    let keyOnlyInDB = key.substring(1);
+                    ret[keyOnlyInDB] = this[key];
+                }
+                
+            });
         return ret;
     }
 
     insert(values = null)
     {
+
         let def = $.Deferred();
         let ret = false;
+        values = this.prepareJsonInsert();
         let classname = eval(this.constructor.name);
         let table = classname.table;
         let id= $.map([table], (table)=>
@@ -143,28 +179,29 @@ class CommonObject
                 {
         
                     table:table,
-                    fields:values
+                    fields:JSON.stringify(values)
         
                 }).done( (resp)=>
                 {
                     
-                    console.log(resp);
                     ret = resp;
+                    this.id = Number(ret); 
+
                 });
         });
         $.when.apply($, id).then(()=>
         {
             def.resolve(ret);
+           
         })
-        
+       
         return def.promise();
         
     }
-
+   
     update()
     {
         //TODO
-
     }
 
     delete()
