@@ -65,14 +65,14 @@ switch ($_SERVER['REQUEST_METHOD']) {
     
     case 'PUT' :
 
-        $_put = array();
-        parse_str(file_get_contents('php://input'), $_put);
-        $_put= validate_request($_put);
-
+        
+         $_put = file_get_contents('php://input');
+        $_put = json_decode($_put, true);
+        $_put = validate_request($_put);
         $table = isset($_put['table']) ? $_put['table'] : NULL;
         if($table == NULL)
         {
-            echo json_encode(false);
+            echo json_encode("false");
             break;
         }
         $rowid = isset($_put['rowid']) ? $_put['rowid'] : NULL;

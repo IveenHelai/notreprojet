@@ -130,13 +130,28 @@ class Db
     public static function update($table, $fields, $rowid)
     {
         $sql = " UPDATE $table SET ";
+
         $params= [];
-        
+
         foreach ($fields as $key => $value) 
         {
             $sql.= " $key = ? ,";
-            $params[] = $value;
+            if($value === false)
+            {
+                $params[] = 0;
+            }
+            elseif($value === true)
+            {
+                $params[] = 1;
+            }
+            else
+            {
+                $params[] = $value;
+
+            }
+            
         }
+        
         $sql = trim($sql, ',');
         $sql.= " WHERE id = ?";
         $params[] = $rowid;

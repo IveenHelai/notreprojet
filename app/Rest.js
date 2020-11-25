@@ -32,7 +32,7 @@ class Rest
 
                 url:"rest/",
                 method: "PUT",
-                data:data
+                data:JSON.stringify(data)
 
             });
         }

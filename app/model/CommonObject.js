@@ -13,7 +13,7 @@ class CommonObject
             }
             else if(this[key] !== undefined && typeof this[key] === "boolean")
             {
-                this[key] = obj[key] === "1" ? true : false;
+                this[key] = obj[key] == "1" ? true : false;
             }
             else
             {
@@ -24,7 +24,7 @@ class CommonObject
 
     loadRels(rels)
     {
-        
+        //TODO remplacer rest.get par classname.select()
         for (let i = 0; i < rels.length; i++) 
         {
 
@@ -49,6 +49,7 @@ class CommonObject
                     resp = resp.tryJsonParse();
                     resp.forEach( elt=>
                     {
+                        elt = classname.prepareJsonSelect(elt);
                         this[rel.container].push(new classname(elt));
                     });
                     
@@ -71,6 +72,7 @@ class CommonObject
                     resp = resp.tryJsonParse();
                     resp.forEach(elt=>
                     {
+                        elt = classname.prepareJsonSelect(elt);
                         this[rel.container] = new classname(elt);
                     });
                 });
@@ -103,11 +105,13 @@ class CommonObject
                     resp = resp.tryJsonParse();
                     resp.forEach(obj=>
                     {
-                        
+                        let tmp = obj.id;
+                        obj = classname.prepareJsonSelect(obj);
+                        obj['id'] = tmp;
                         ret.push(new classname(obj));
                         
                     });
-                    def.resolve(ret);
+                    def.resolve(ret[0]);
                 });
         } 
         else 
@@ -164,22 +168,25 @@ class CommonObject
             });
         return ret;
     }
-
-    insert(values = null)
+ 
+    insert(values = {})
     {
 
         let def = $.Deferred();
         let ret = false;
-        values = this.prepareJsonInsert();
+        this.assign(values);
+        console.log(this);
+        let fields = this.prepareJsonInsert();
         let classname = eval(this.constructor.name);
         let table = classname.table;
+
         let id= $.map([table], (table)=>
         {
             return Rest.post(
                 {
         
                     table:table,
-                    fields:JSON.stringify(values)
+                    fields:JSON.stringify(fields)
         
                 }).done( (resp)=>
                 {
@@ -199,15 +206,69 @@ class CommonObject
         
     }
    
-    update()
+    update(values = {})
     {
-        //TODO
+        let classname = eval(this.constructor.name);
+        let def = $.Deferred();
+        let table = classname.table;
+        let id = this.id;
+        let fields = values === undefined ? {} : (values);
+        this.assign(fields);
+        fields = this.prepareJsonInsert();
+        console.log(fields);
+        let data = 
+        {
+            table: table,
+            rowid: id,
+            fields: fields
+        }
+        console.log(data);
+        Rest.put(data).done(resp=>
+            {
+                def.resolve(resp);
+            });
+
+        return def.promise();
     }
 
-    delete()
+    deactivate()
     {
-        //TODO
+        let def = $.Deferred();
+        let classname = eval(this.constructor.name);
+        let table = classname.table;
+        let id = this.id;
+        let data = 
+        {
+            table:table,
+            rowid:id,
+            soft:true
+        }
+        Rest.delete(data).done(resp=>
+        {
+            
+            def.resolve(resp);
+        });
+        return def.promise();
+    }
 
+    delete() 
+    {
+        let def = $.Deferred();
+        let classname = eval(this.constructor.name);
+        let table = classname.table;
+        let id = this.id;
+        let data = 
+        {
+            table:table,
+            rowid:id,
+            soft:false
+        }
+        Rest.delete(data).done(resp=>
+        {
+            
+            def.resolve(resp);
+        });
+        return def.promise();
     }
 
 

@@ -51,26 +51,57 @@ Utils.init();
 //         });
 //     });
 
-let tmp = new Product({_active:true,_title:"XBOX 5",_price:499.99,_ord:1});
-tmp._category_id = 5;
-tmp._onsale = 0;
-tmp._description = "Une console fictive"
+// let tmp = new Product({_active:true,_title:"XBOX 5",_price:499.99,_ord:1});
+// console.log(tmp);
+// tmp._category_id = 5;
+// tmp._onsale = false;
+// tmp._description = "Une console fictive"
 
-
-tmp.insert().done(id=>
-{
+// let tmp_id;
+// console.log(tmp);
+// tmp.insert().done(id=>
+// {
     
-    console.log(id+" product created");
-    tmp.loadRels(tmp.rels)
-    console.log(tmp);
+//     console.log(id+" product created");
+//     tmp.loadRels(tmp.rels)
+//     console.log(tmp);
+//     tmp_id = id;
+//     tmp._price = 349.99;
+//     tmp.update({_description:"Un test de double update"}).done(data=>
+//         {
+//             let test = Product.select(tmp_id).done(resp=>
+//             {
+//                 console.log(resp);
+//             });
+//         });
 
-})
+    
+
+// });
+
+
+// let test2 = new Product({_title:"Double insert title", _price:35.25});
+// console.log(test2);
+// test2._description = 'double insert description test';
+// test2.insert({_category_id: 5});
 
 
 
 
-
-
+let todelete = Product.select(262, false).done(resp=>
+    {
+        
+        resp.loadRels(resp.rels)
+        console.log(resp);
+        resp.deactivate();
+    });
+     let todestroy = Product.select(260, false).done(resp=>
+        {
+            
+            resp.loadRels(resp.rels)
+            console.log(resp);
+            resp.delete();
+        });
 
 // //TRY UPDATE 
 
