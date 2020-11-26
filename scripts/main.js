@@ -1,5 +1,5 @@
 App.start();
-Utils.init();
+
 
 
 
@@ -88,20 +88,20 @@ Utils.init();
 
 
 
-let todelete = Product.select(262, false).done(resp=>
-    {
+// let todelete = Product.select(262, false).done(resp=>
+//     {
         
-        resp.loadRels(resp.rels)
-        console.log(resp);
-        resp.deactivate();
-    });
-     let todestroy = Product.select(260, false).done(resp=>
-        {
+//         resp.loadRels(resp.rels)
+//         console.log(resp);
+//         resp.deactivate();
+//     });
+//      let todestroy = Product.select(260, false).done(resp=>
+//         {
             
-            resp.loadRels(resp.rels)
-            console.log(resp);
-            resp.delete();
-        });
+//             resp.loadRels(resp.rels)
+//             console.log(resp);
+//             resp.delete();
+//         });
 
 // //TRY UPDATE 
 

@@ -5,9 +5,10 @@ class App
 
         App.loadClasses().done(()=>
         {
-            Utils.init();
+            
             $('document').on('ready')
-            {
+            {   
+                Utils.init();
                 App.browse();
             }
         });
@@ -29,12 +30,17 @@ class App
     {
         
         //console.clear();
-        let hash = (window.location.hash || "#accueil").substring(1);
-
+        let params = (window.location.hash || "#accueil").substring(1).split("/");
+        let hash = params[0];
+        let id = params[1] > 0 ? Number(params[1]) : null;
+        Router.navigate(hash,id).done(view=>
+            {
+                $('main').hide().html(view).fadeIn('fast');
+            });
     }
 
     static classes = [
-        "Utils", "Rest", "model/CommonObject" 
+        "Utils", "Rest", "model/CommonObject", "router/Router" 
     ];
     static extends = [
         "model/Category", "model/Product"
@@ -45,7 +51,7 @@ class App
         let def = $.Deferred();
         let classes = $.map(App.classes, (cl)=>{
 
-            return App.loadScript("app"+cl+"js");
+            return App.loadScript("app/"+cl+".js");
 
         });
         $.when.apply($, classes).then(()=>{
