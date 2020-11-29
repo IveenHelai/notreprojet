@@ -15,6 +15,9 @@ class App
         window.onpopstate = () => 
         {
             App.browse();
+            // let doc = new BoolBadge(true).render();
+            // console.log(doc);
+            // $("main").append(doc);
         }
 
         $('.nav-link').on('click', (evt) => 
@@ -35,12 +38,18 @@ class App
         let id = params[1] > 0 ? Number(params[1]) : null;
         Router.navigate(hash,id).done(view=>
             {
+                
                 $('main').hide().html(view).fadeIn('fast');
+                
             });
+        
     }
 
     static classes = [
         "Utils", "Rest", "model/CommonObject", "router/Router" 
+    ];
+    static components = [
+        "components/BoolBadge", "components/ListCategory"
     ];
     static extends = [
         "model/Category", "model/Product"
@@ -54,23 +63,32 @@ class App
             return App.loadScript("app/"+cl+".js");
 
         });
-        $.when.apply($, classes).then(()=>{
+        let components = $.map(App.components, (comp)=>{
+
+            return App.loadScript("app/"+comp+".jsx", true);
+
+        });
+        $.when.apply($, [classes,components]).then(()=>{
+            
             let extend = $.map(App.extends, (ext)=>{
                 return App.loadScript("app/"+ext+".js");
             });
             $.when.apply($, extend).then(()=>{
                 def.resolve();
             });
+            
         });
+        
         return def.promise();
     }
 
-    static loadScript(path)
+    static loadScript(path, isJSX = false)
     {
         let def = $.Deferred();
         let scr = document.createElement('script');
         scr.src = path;
         scr.defer = true;
+        scr.type = isJSX ? "text/babel" : "text/javascript";
         scr.onload = function () 
         {
             def.resolve();
