@@ -35,6 +35,8 @@ class Router
                 if (id>0) 
                 {
                     viewPath = "app/view/Category.html";
+                    renderer = "OneCategory";
+                    rendering = "Category.getOne("+id+")";
                     Product.selected = id;
 
                 } 
@@ -105,6 +107,8 @@ class Router
                     let renderObj = rendering.tryEval(); 
                     view =  new component(renderObj).render();
                 }
+                
+                
                 def.resolve(view);
             }
         

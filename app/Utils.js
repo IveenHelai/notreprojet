@@ -2,6 +2,8 @@ class Utils{
 
     static init(){
 
+        
+
         String.prototype.tryJsonParse = function () 
         {
             let ret = false;
@@ -15,7 +17,7 @@ class Utils{
             }
             return ret;
         }
-
+        
         String.prototype.capitalize = function () 
         {
             let str = this;

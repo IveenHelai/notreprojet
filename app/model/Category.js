@@ -16,6 +16,13 @@ class Category extends CommonObject
     _ord = 0;
     product_list = [];
 
+    get onsaleBadge(){
+        return new BoolBadge(this._onsale).render();
+    }
+
+    get onsaleSwitch(){
+        return new BoolSwitch({model: this, prop:'_onsale'}).render();
+    }
 
     rels=
     [

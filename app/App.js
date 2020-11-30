@@ -10,6 +10,7 @@ class App
             {   
                 Utils.init();
                 App.browse();
+                
             }
         });
         window.onpopstate = () => 
@@ -38,8 +39,10 @@ class App
         let id = params[1] > 0 ? Number(params[1]) : null;
         Router.navigate(hash,id).done(view=>
             {
-                
+                $('[data-toggle="tooltip"]').tooltip('hide');
                 $('main').hide().html(view).fadeIn('fast');
+                //TODO MIEUX GERER CES EVENEMENTS
+                $('[data-toggle="tooltip"]').tooltip();
                 
             });
         
@@ -49,7 +52,7 @@ class App
         "Utils", "Rest", "model/CommonObject", "router/Router" 
     ];
     static components = [
-        "components/BoolBadge", "components/ListCategory"
+        "components/BoolBadge", "components/ListCategory", "components/BoolSwitch", "components/GotoButton", "components/OneCategory"
     ];
     static extends = [
         "model/Category", "model/Product"
